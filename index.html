@@ -4,146 +4,194 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Binish Khadka — Apps</title>
-<meta name="description" content="Independent mobile app developer. Swing Trade Signals and FlashLog for iOS and Android.">
+<meta name="description" content="Independent developer. Swing Trade Signals and FlashLog, for iOS and Android.">
+<meta name="theme-color" content="#FCFCFB" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0C0C0E" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="img/flashlog.png" sizes="any">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&family=Public+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Public+Sans:wght@400;500;600&display=swap">
 <style>
+  /* The page is deliberately monochrome. Both app icons are strongly
+     coloured and pull in opposite directions — one near-black navy, one
+     cream — so any page accent would fight one of them. Letting the
+     products supply the only colour keeps them the thing you look at. */
   :root {
-    --bg:      #FBFBFC;
-    --surface: #FFFFFF;
-    --ink:     #16181C;
-    --ink-2:   #3F444D;
-    --muted:   #6B7280;
-    --line:    #E3E5EA;
-    --accent:  #1F5F58;
-    --accent-2:#17453F;
-    --chip:    #EEF2F1;
+    --paper:   #FCFCFB;
+    --ink:     #111114;
+    --ink-2:   #3A3A40;
+    --muted:   #78787F;
+    --faint:   #A2A2A9;
+    --rule:    #E6E6E3;
+    --rule-2:  #D2D2CE;
+    --tile:    #F3F3F1;
+    --live:    #2E6B45;
+    --live-bg: #E8F1EB;
   }
   @media (prefers-color-scheme: dark) {
     :root {
-      --bg:      #101215;
-      --surface: #171A1F;
-      --ink:     #EDEFF2;
-      --ink-2:   #C4C9D1;
-      --muted:   #8B939F;
-      --line:    #262A31;
-      --accent:  #6FB3A8;
-      --accent-2:#8FC9BF;
-      --chip:    #1C2A28;
+      --paper:   #0C0C0E;
+      --ink:     #F2F2F0;
+      --ink-2:   #C6C6C4;
+      --muted:   #8A8A92;
+      --faint:   #6A6A72;
+      --rule:    #232327;
+      --rule-2:  #33333A;
+      --tile:    #17171A;
+      --live:    #7FC49B;
+      --live-bg: #16241C;
     }
   }
+
   * { box-sizing: border-box; }
+
+  html { -webkit-text-size-adjust: 100%; }
+
   body {
     margin: 0;
-    padding: 0 22px 72px;
-    background: var(--bg);
+    padding: 0 24px 96px;
+    background: var(--paper);
     color: var(--ink);
     font-family: 'Public Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     font-size: 16px;
-    line-height: 1.65;
+    line-height: 1.6;
     -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
-  .wrap { max-width: 620px; margin: 0 auto; }
 
-  header { padding: 72px 0 34px; }
+  .wrap { max-width: 600px; margin: 0 auto; }
+
+  /* ---------- masthead ---------- */
+  header { padding: 104px 0 0; }
+
   h1 {
-    font-family: 'Newsreader', Georgia, serif;
-    font-size: clamp(34px, 7vw, 46px);
-    font-weight: 600;
+    font-family: 'Instrument Serif', Georgia, 'Times New Roman', serif;
+    font-weight: 400;
+    font-size: clamp(46px, 11vw, 68px);
+    line-height: 1.02;
     letter-spacing: -.015em;
-    line-height: 1.1;
-    margin: 0 0 10px;
+    margin: 0 0 18px;
+    text-wrap: balance;
   }
-  header p {
-    margin: 0;
-    font-size: 17px;
+  .lede {
+    font-size: 17.5px;
+    line-height: 1.55;
     color: var(--ink-2);
-    max-width: 46ch;
+    max-width: 34ch;
+    margin: 0;
+  }
+  .lede em {
+    font-family: 'Instrument Serif', Georgia, serif;
+    font-style: italic;
+    font-size: 1.08em;
   }
 
-  h2 {
-    font-family: 'Public Sans', sans-serif;
+  .sectionlabel {
     font-size: 11px;
     font-weight: 600;
-    letter-spacing: .14em;
+    letter-spacing: .16em;
     text-transform: uppercase;
-    color: var(--muted);
-    margin: 44px 0 16px;
-    padding-bottom: 9px;
-    border-bottom: 1px solid var(--line);
+    color: var(--faint);
+    margin: 82px 0 0;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--ink);
   }
 
+  /* ---------- app rows ---------- */
   .app {
-    background: var(--surface);
-    border: 1px solid var(--line);
-    border-radius: 12px;
-    padding: 22px 24px;
-    margin-bottom: 14px;
+    display: grid;
+    grid-template-columns: 76px 1fr;
+    gap: 22px;
+    align-items: start;
+    padding: 34px 0;
+    border-bottom: 1px solid var(--rule);
   }
-  .app h3 {
-    font-family: 'Newsreader', Georgia, serif;
-    font-size: 23px;
-    font-weight: 600;
+  .app img {
+    width: 76px;
+    height: 76px;
+    border-radius: 17px;
+    display: block;
+    border: 1px solid var(--rule-2);
+    /* Store listings mask icons; matching that reads as "an app" rather
+       than "a picture", and gives the two very different artworks a
+       consistent silhouette. */
+  }
+  .app h2 {
+    font-family: 'Instrument Serif', Georgia, serif;
+    font-weight: 400;
+    font-size: 30px;
+    line-height: 1.12;
     letter-spacing: -.01em;
-    margin: 0 0 2px;
+    margin: -4px 0 6px;
   }
-  .kicker {
-    font-size: 12px;
+  .meta {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+  .status {
+    font-size: 10.5px;
     font-weight: 600;
-    letter-spacing: .06em;
+    letter-spacing: .1em;
     text-transform: uppercase;
-    color: var(--accent);
-    margin: 0 0 10px;
+    padding: 3px 9px;
+    border-radius: 3px;
+    background: var(--live-bg);
+    color: var(--live);
   }
-  .app p.blurb { margin: 0 0 16px; color: var(--ink-2); font-size: 15.5px; }
+  .status.soon { background: var(--tile); color: var(--muted); }
+  .platform { font-size: 12.5px; color: var(--faint); letter-spacing: .02em; }
 
-  .links { display: flex; flex-wrap: wrap; gap: 8px; }
+  .app p { margin: 0 0 16px; color: var(--ink-2); font-size: 15.5px; line-height: 1.6; }
+
+  .links { display: flex; flex-wrap: wrap; gap: 18px; }
   .links a {
-    display: inline-block;
-    font-size: 14px;
+    font-size: 14.5px;
     font-weight: 500;
-    text-decoration: none;
-    padding: 7px 14px;
-    border-radius: 8px;
-    border: 1px solid var(--line);
     color: var(--ink);
-    background: var(--bg);
-    transition: border-color .15s ease;
+    text-decoration: none;
+    padding-bottom: 2px;
+    border-bottom: 1px solid var(--rule-2);
+    transition: border-color .18s ease, color .18s ease;
   }
-  .links a:hover, .links a:focus-visible { border-color: var(--accent); color: var(--accent); }
-  .links a.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
-  .links a.primary:hover, .links a.primary:focus-visible { background: var(--accent-2); border-color: var(--accent-2); color: #fff; }
-  @media (prefers-color-scheme: dark) {
-    .links a.primary { color: #0E1513; }
-    .links a.primary:hover, .links a.primary:focus-visible { color: #0E1513; }
-  }
-  a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .links a:hover, .links a:focus-visible { border-color: var(--ink); }
+  .links a.quiet { color: var(--muted); }
+  .links a.quiet:hover, .links a.quiet:focus-visible { color: var(--ink); border-color: var(--ink); }
+  a:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; border-radius: 2px; }
 
-  .chip {
-    display: inline-block;
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: .05em;
-    text-transform: uppercase;
-    color: var(--muted);
-    background: var(--chip);
-    border-radius: 999px;
-    padding: 3px 10px;
-    margin-left: 8px;
-    vertical-align: 3px;
+  /* ---------- contact ---------- */
+  .contact { padding: 34px 0 0; }
+  .contact p { margin: 0; color: var(--ink-2); font-size: 15.5px; max-width: 46ch; }
+  .contact a {
+    color: var(--ink);
+    text-decoration: none;
+    border-bottom: 1px solid var(--rule-2);
+    transition: border-color .18s ease;
   }
+  .contact a:hover, .contact a:focus-visible { border-color: var(--ink); }
 
   footer {
-    margin-top: 52px;
-    padding-top: 22px;
-    border-top: 1px solid var(--line);
-    font-size: 14.5px;
-    color: var(--muted);
+    margin-top: 72px;
+    padding-top: 20px;
+    border-top: 1px solid var(--rule);
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+    font-size: 13px;
+    color: var(--faint);
   }
-  footer a { color: var(--accent); text-decoration: none; }
-  footer a:hover, footer a:focus-visible { text-decoration: underline; }
-  footer p { margin: 0 0 8px; }
+  footer a { color: var(--faint); text-decoration: none; border-bottom: 1px solid transparent; }
+  footer a:hover, footer a:focus-visible { color: var(--ink); border-color: var(--rule-2); }
+
+  @media (max-width: 480px) {
+    header { padding-top: 72px; }
+    .app { grid-template-columns: 60px 1fr; gap: 16px; }
+    .app img { width: 60px; height: 60px; border-radius: 14px; }
+    .app h2 { font-size: 25px; margin-top: -2px; }
+  }
 </style>
 </head>
 <body>
@@ -151,50 +199,67 @@
 
   <header>
     <h1>Binish Khadka</h1>
-    <p>Independent developer building focused mobile apps for iOS and Android.</p>
+    <p class="lede">
+      Independent developer. I build <em>small, focused</em> mobile apps for
+      iOS and&nbsp;Android.
+    </p>
   </header>
 
-  <h2>Apps</h2>
+  <p class="sectionlabel">Apps</p>
 
-  <div class="app">
-    <p class="kicker">Finance</p>
-    <h3>Swing Trade Signals</h3>
-    <p class="blurb">
-      Technical swing-trade setups, ranked and scored, with entry context and
-      risk-to-reward on every signal.
-    </p>
-    <div class="links">
-      <a class="primary" href="https://apps.apple.com/us/app/swing-trade-signals/id6797416246">App&nbsp;Store</a>
-      <a class="primary" href="https://play.google.com/store/apps/details?id=com.swingtradesignals.app">Google&nbsp;Play</a>
-      <a href="/privacy-policy/">Privacy Policy</a>
-      <a href="/privacy-policy/terms.html">Terms</a>
+  <section class="app">
+    <img src="img/swing-trade-signals.png" width="76" height="76" alt="Swing Trade Signals app icon">
+    <div>
+      <h2>Swing Trade Signals</h2>
+      <div class="meta">
+        <span class="status">Available</span>
+        <span class="platform">iOS &amp; Android · Finance</span>
+      </div>
+      <p>
+        Technical swing-trade setups, ranked and scored, each with entry
+        context and a risk-to-reward figure. Educational — not financial
+        advice.
+      </p>
+      <div class="links">
+        <a href="https://apps.apple.com/us/app/swing-trade-signals/id6797416246">App&nbsp;Store</a>
+        <a href="https://play.google.com/store/apps/details?id=com.swingtradesignals.app">Google&nbsp;Play</a>
+        <a class="quiet" href="/privacy-policy/">Privacy</a>
+        <a class="quiet" href="/privacy-policy/terms.html">Terms</a>
+      </div>
     </div>
-  </div>
+  </section>
 
-  <div class="app">
-    <p class="kicker">Personal finance</p>
-    <h3>FlashLog<span class="chip">Coming soon</span></h3>
-    <p class="blurb">
-      An expense tracker built around one idea: logging a purchase should take
-      less time than the purchase did. Works offline, with no account.
-    </p>
-    <div class="links">
-      <a href="/flashlog-legal/">Privacy Policy</a>
-      <a href="/flashlog-legal/terms.html">Terms</a>
+  <section class="app">
+    <img src="img/flashlog.png" width="76" height="76" alt="FlashLog app icon">
+    <div>
+      <h2>FlashLog</h2>
+      <div class="meta">
+        <span class="status soon">In development</span>
+        <span class="platform">iOS &amp; Android · Personal finance</span>
+      </div>
+      <p>
+        An expense tracker built on one idea: logging a purchase should take
+        less time than the purchase did. No account, no cloud — it works with
+        no signal, and your entries stay on your phone.
+      </p>
+      <div class="links">
+        <a class="quiet" href="/flashlog-legal/">Privacy</a>
+        <a class="quiet" href="/flashlog-legal/terms.html">Terms</a>
+      </div>
     </div>
-  </div>
+  </section>
 
-  <h2>Support</h2>
-  <p>
-    Questions, problems, or requests about any of these apps — including
-    requests to access or delete data — reach me at
-    <a href="mailto:bkappsupport@gmail.com" style="color:var(--accent);text-decoration:none;font-weight:500">bkappsupport@gmail.com</a>.
-    I read every message.
-  </p>
+  <div class="contact">
+    <p>
+      Questions, problems, or a request to access or delete your data —
+      write to <a href="mailto:bkappsupport@gmail.com">bkappsupport@gmail.com</a>.
+      I read everything that arrives.
+    </p>
+  </div>
 
   <footer>
-    <p>&copy; <span id="y">2026</span> Binish Khadka</p>
-    <p><a href="/privacy-policy/">Swing Trade Signals policy</a> &middot; <a href="/flashlog-legal/">FlashLog policy</a></p>
+    <span>&copy; <span id="y">2026</span> Binish Khadka</span>
+    <span><a href="/privacy-policy/">Swing Trade Signals</a> &nbsp;·&nbsp; <a href="/flashlog-legal/">FlashLog</a></span>
   </footer>
 
 </div>
