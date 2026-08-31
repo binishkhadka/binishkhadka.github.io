@@ -3,11 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Binish Khadka — Apps</title>
-<meta name="description" content="Independent developer. Swing Trade Signals and FlashLog, for iOS and Android.">
+<title>BK Apps — Binish Khadka</title>
+<meta name="description" content="BK Apps — small, focused mobile apps by Binish Khadka. Swing Trade Signals and FlashLog, for iOS and Android.">
 <meta name="theme-color" content="#FCFCFB" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#0C0C0E" media="(prefers-color-scheme: dark)">
-<link rel="icon" href="img/flashlog.png" sizes="any">
+<link rel="icon" href="img/monogram.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Public+Sans:wght@400;500;600&display=swap">
@@ -73,6 +73,15 @@
     margin: 0 0 18px;
     text-wrap: balance;
   }
+  .monogram { display: block; width: 52px; height: 52px; margin: 0 0 26px; }
+  .byline {
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: .09em;
+    text-transform: uppercase;
+    color: var(--faint);
+    margin: -10px 0 20px;
+  }
   .lede {
     font-size: 17.5px;
     line-height: 1.55;
@@ -106,7 +115,7 @@
     padding: 34px 0;
     border-bottom: 1px solid var(--rule);
   }
-  .app img {
+  .app > img {
     width: 76px;
     height: 76px;
     border-radius: 17px;
@@ -145,6 +154,18 @@
   .platform { font-size: 12.5px; color: var(--faint); letter-spacing: .02em; }
 
   .app p { margin: 0 0 16px; color: var(--ink-2); font-size: 15.5px; line-height: 1.6; }
+
+  /* Official Apple and Google artwork, used unmodified — both companies'
+     brand guidelines forbid recreating or restyling the badges, so these
+     are their own files served from this repo rather than CSS lookalikes.
+     Google's badge ships with ~9% internal padding that Apple's does not,
+     which is why the two heights differ: it makes the visible buttons the
+     same size instead of the files. */
+  .badges { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-bottom: 18px; }
+  .badge { display: inline-flex; border-radius: 8px; }
+  .badge img { display: block; height: 40px; width: auto; border: 0; border-radius: 0; }
+  .badge.gp img { height: 47px; margin: 0 -6px; }
+  .badge:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
 
   .links { display: flex; flex-wrap: wrap; gap: 18px; }
   .links a {
@@ -189,7 +210,7 @@
   @media (max-width: 480px) {
     header { padding-top: 72px; }
     .app { grid-template-columns: 60px 1fr; gap: 16px; }
-    .app img { width: 60px; height: 60px; border-radius: 14px; }
+    .app > img { width: 60px; height: 60px; border-radius: 14px; }
     .app h2 { font-size: 25px; margin-top: -2px; }
   }
 </style>
@@ -198,10 +219,12 @@
 <div class="wrap">
 
   <header>
-    <h1>Binish Khadka</h1>
+    <img class="monogram" src="img/monogram.svg" width="52" height="52" alt="">
+    <h1>BK&nbsp;Apps</h1>
+    <p class="byline">Apps by Binish Khadka</p>
     <p class="lede">
-      Independent developer. I build <em>small, focused</em> mobile apps for
-      iOS and&nbsp;Android.
+      <em>Small, focused</em> mobile apps for iOS and&nbsp;Android — built
+      to do one thing quickly and get out of the way.
     </p>
   </header>
 
@@ -220,9 +243,17 @@
         context and a risk-to-reward figure. Educational — not financial
         advice.
       </p>
+      <div class="badges">
+        <a class="badge" href="https://apps.apple.com/us/app/swing-trade-signals/id6797416246"
+           aria-label="Download Swing Trade Signals on the App Store">
+          <img src="img/appstore.svg" alt="Download on the App Store" height="40">
+        </a>
+        <a class="badge gp" href="https://play.google.com/store/apps/details?id=com.swingtradesignals.app"
+           aria-label="Get Swing Trade Signals on Google Play">
+          <img src="img/googleplay.png" alt="Get it on Google Play" height="47">
+        </a>
+      </div>
       <div class="links">
-        <a href="https://apps.apple.com/us/app/swing-trade-signals/id6797416246">App&nbsp;Store</a>
-        <a href="https://play.google.com/store/apps/details?id=com.swingtradesignals.app">Google&nbsp;Play</a>
         <a class="quiet" href="/privacy-policy/">Privacy</a>
         <a class="quiet" href="/privacy-policy/terms.html">Terms</a>
       </div>

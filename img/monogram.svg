@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="BK">
+  <!-- Theme-aware: the tile inverts with the viewer's colour scheme so the
+       favicon stays legible in both light and dark browser chrome. -->
+  <style>
+    .tile { fill: #111114; }
+    .mark { fill: #FCFCFB; }
+    @media (prefers-color-scheme: dark) {
+      .tile { fill: #F2F2F0; }
+      .mark { fill: #0C0C0E; }
+    }
+  </style>
+  <rect class="tile" width="64" height="64" rx="15"/>
+  <text class="mark" x="32" y="44.5" text-anchor="middle"
+        font-family="Georgia, 'Times New Roman', serif"
+        font-size="31" letter-spacing="-1.2">BK</text>
+</svg>
