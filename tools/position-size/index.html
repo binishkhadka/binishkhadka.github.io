@@ -30,9 +30,9 @@
     <p class="eyebrow">Free tool</p>
     <h1>Position size calculator</h1>
     <p class="lede">
-      How many shares to buy so that being wrong costs a fixed, survivable
-      slice of your account. Nothing is sent anywhere — the maths runs in your
-      browser.
+      How many shares to buy so that being wrong costs the amount you decided
+      on, and not a penny you had not planned for. The maths runs in your
+      browser — nothing you type is sent anywhere.
     </p>
   </header>
 
@@ -71,7 +71,7 @@
       </div>
     </div>
 
-    <div class="result" aria-live="polite">
+    <div class="result">
       <p class="answerlabel" id="answerlabel">Buy</p>
       <p class="answer"><span id="shares">—</span><span class="sub" id="sharesUnit">shares</span></p>
 
@@ -95,17 +95,16 @@
       </dl>
 
       <p class="note" id="note" hidden></p>
+      <p class="sr-only" id="announce" aria-live="polite" role="status"></p>
     </div>
   </section>
 
   <div class="prose">
     <h2>How the number is worked out</h2>
     <p>
-      Position size is the one decision that determines whether a losing run is
-      an inconvenience or the end of the account. It does not depend on how
-      confident you feel about the trade. It depends on three things: how much
-      money you have, how much of it you are prepared to lose on one idea, and
-      how far away your stop is.
+      Position size does not depend on how good the trade looks. It depends on
+      three things: how much you have, how much of it you are willing to lose
+      on one idea, and how far your stop is from your entry.
     </p>
     <p class="formula">
       risk amount&nbsp; = &nbsp;account &times; risk %<br>
@@ -141,9 +140,8 @@
       <li><strong>Under 1%</strong> is common for people trading a larger account or a strategy that takes many trades a week.</li>
     </ul>
     <p>
-      The figure matters far less than applying it consistently. A trader who
-      always risks 2% will outlast one who usually risks 0.5% and occasionally
-      risks 15% because a setup looked certain.
+      Which number you pick matters less than using the same one every time.
+      The calculator does not choose for you.
     </p>
 
     <h3>Rounding</h3>
@@ -194,13 +192,35 @@
   const els = {
     account: $('account'), risk: $('risk'), entry: $('entry'), stop: $('stop'),
     shares: $('shares'), sharesUnit: $('sharesUnit'), answerlabel: $('answerlabel'),
-    riskAmt: $('riskAmt'), riskShare: $('riskShare'),
+    riskAmt: $('riskAmt'), riskShare: $('riskShare'), announce: $('announce'),
     posValue: $('posValue'), posPct: $('posPct'), note: $('note'),
   };
 
   const money = (n) => n.toLocaleString(undefined, { style: 'currency', currency: 'USD', maximumFractionDigits: 2 });
+  /**
+   * Reads a number a person actually typed or pasted.
+   *
+   * parseFloat is not safe here: it stops at the first character it does not
+   * understand, so a pasted "1,234.56" silently becomes 1 — a position size a
+   * thousand times too small, with no error shown. Someone sizes a real trade
+   * on this number, so the parser has to handle thousands separators, currency
+   * symbols and comma-decimal locales instead of quietly truncating them.
+   */
   const num = (el) => {
-    const v = parseFloat(el.value);
+    let t = String(el.value).trim();
+    if (!t) return NaN;
+    t = t.replace(/[\s '`$£€¥₹]/g, '');
+    const comma = t.lastIndexOf(','), dot = t.lastIndexOf('.');
+    if (comma !== -1 && dot !== -1) {
+      // whichever comes last is the decimal separator: 1.234,56 vs 1,234.56
+      t = comma > dot ? t.replace(/\./g, '').replace(',', '.') : t.replace(/,/g, '');
+    } else if (comma !== -1) {
+      // a lone comma: a decimal if it leaves 1-2 digits, else a group separator
+      const tail = t.length - comma - 1;
+      t = tail === 3 && /^\d{1,3}(,\d{3})+$/.test(t) ? t.replace(/,/g, '') : t.replace(',', '.');
+    }
+    if (!/^-?\d*\.?\d*$/.test(t)) return NaN;
+    const v = parseFloat(t);
     return Number.isFinite(v) ? v : NaN;
   };
 
@@ -221,6 +241,7 @@
     const entry = num(els.entry), stop = num(els.stop);
 
     if (![account, riskPct, entry, stop].every(Number.isFinite)) return blank('');
+    if ([account, riskPct, entry, stop].some((v) => v < 0)) return blank('Those need to be positive numbers.');
     if (account <= 0 || entry <= 0) return blank('Account size and entry price need to be above zero.');
     if (riskPct <= 0) return blank('Set a risk percentage above zero.');
     if (riskPct > 100) return blank('You cannot risk more than the whole account.');
@@ -254,8 +275,21 @@
     }
   }
 
+  // One short sentence, once typing stops — not a re-read of every figure on
+  // every keystroke.
+  let announceTimer;
+  function announce() {
+    clearTimeout(announceTimer);
+    announceTimer = setTimeout(() => {
+      const n = els.shares.textContent;
+      els.announce.textContent = n === '—'
+        ? (els.note.hidden ? '' : els.note.textContent)
+        : `${els.answerlabel.textContent} ${n} ${els.sharesUnit.textContent}, risking ${els.riskAmt.textContent}.`;
+    }, 600);
+  }
+
   for (const el of [els.account, els.risk, els.entry, els.stop]) {
-    el.addEventListener('input', calc);
+    el.addEventListener('input', () => { calc(); announce(); });
   }
   calc();
 </script>

@@ -88,6 +88,41 @@ const CASES = [
     want: { shares: '—', noteHas: 'above zero' },
   },
   {
+    // The bug these exist for: parseFloat("1,234.56") returns 1, so a pasted
+    // figure produced a position a thousand times too small, silently. Ten
+    // passing tests missed it because every one of them typed a bare number.
+    name: 'a pasted thousands separator is not truncated',
+    in: { account: '10,000', risk: 1, entry: 50, stop: 47.5 },
+    want: { shares: '40' },
+  },
+  {
+    name: 'a pasted currency symbol is ignored',
+    in: { account: '$10,000.00', risk: 1, entry: '$50', stop: '$47.50' },
+    want: { shares: '40' },
+  },
+  {
+    name: 'comma-decimal locales read as decimals, not groups',
+    // 47,5 means 47.5 — not 475
+    in: { account: 10000, risk: 1, entry: 50, stop: '47,5' },
+    want: { shares: '40' },
+  },
+  {
+    name: 'european grouping with comma decimal',
+    // 10.000,50 is ten thousand and fifty cents
+    in: { account: '10.000,50', risk: 1, entry: 50, stop: 47.5 },
+    want: { shares: '40' },
+  },
+  {
+    name: 'a negative stop is refused rather than computed',
+    in: { account: 10000, risk: 1, entry: 50, stop: -47.5 },
+    want: { shares: '—', noteHas: 'positive numbers' },
+  },
+  {
+    name: 'letters are refused, not partially parsed',
+    in: { account: '10000abc', risk: 1, entry: 50, stop: 47.5 },
+    want: { shares: '—' },
+  },
+  {
     name: 'a blank field shows nothing rather than NaN',
     in: { account: '', risk: 1, entry: 50, stop: 45 },
     want: { shares: '—', note: '' },
