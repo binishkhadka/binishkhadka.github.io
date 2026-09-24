@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Get FlashLog</title>
-<meta name="description" content="Download FlashLog for iPhone.">
+<meta name="description" content="Download FlashLog for iPhone or Android.">
 <meta name="theme-color" content="#FCFCFB" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#0C0C0E" media="(prefers-color-scheme: dark)">
 <link rel="icon" href="../img/monogram.svg" type="image/svg+xml">
@@ -12,7 +12,7 @@
 <!-- What a link preview shows when this is pasted into a message or a post.
      Without these, the thumbnail is whatever the scraper guesses. -->
 <meta property="og:title" content="FlashLog">
-<meta property="og:description" content="Log an expense in a couple of taps.">
+<meta property="og:description" content="Log an expense in a couple of taps, on iPhone and Android.">
 <meta property="og:image" content="https://binishkhadka.github.io/img/flashlog.png">
 <meta property="og:url" content="https://binishkhadka.github.io/flashlog/">
 <meta property="og:type" content="website">
@@ -24,12 +24,9 @@
 
 <!-- In the head and before the body paints, so a phone leaves for the store
      without ever flashing this page. Desktop falls through to the badges. -->
-<!-- No data-android yet: FlashLog is still in internal testing on Play, so
-     an Android visitor stays here and sees the App Store badge rather than
-     being sent to a Play listing that does not exist. Add the attribute the
-     day it goes public and this page starts routing Android too. -->
 <script src="../redirect.js"
-        data-ios="6810429342"></script>
+        data-ios="6810429342"
+        data-android="com.bk.flashlog"></script>
 
 <style>
   /* Same tokens as the site root: someone arriving here from a shared link
@@ -96,12 +93,16 @@
 <div class="wrap">
   <img class="icon" src="../img/flashlog.png" alt="" width="96" height="96">
   <h1>FlashLog</h1>
-  <p class="lede">Log an expense in a couple of taps. On iPhone now, Android soon.</p>
+  <p class="lede">Log an expense in a couple of taps. Choose your store below.</p>
 
   <div class="badges">
     <a class="badge" href="https://apps.apple.com/app/id6810429342"
        aria-label="Download FlashLog on the App Store">
       <img src="../img/appstore.svg" alt="Download on the App Store" height="40">
+    </a>
+    <a class="badge gp" href="https://play.google.com/store/apps/details?id=com.bk.flashlog"
+       aria-label="Get FlashLog on Google Play">
+      <img src="../img/googleplay.png" alt="Get it on Google Play" height="47">
     </a>
   </div>
 
