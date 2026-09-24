@@ -4,16 +4,14 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>BK Apps — Binish Khadka</title>
-<meta name="description" content="Small, focused mobile apps for iOS and Android by Binish Khadka — Swing Trade Signals, FlashLog, and free calculators that do the same jobs in a browser.">
-<meta name="theme-color" content="#FCFCFB" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#0C0C0E" media="(prefers-color-scheme: dark)">
-<link rel="icon" href="img/monogram.svg" type="image/svg+xml">
+<meta name="description" content="Log what you spend in three taps, size a trade before you take it, and get a run in while you wait. Apps for iPhone and Android, plus a free position size calculator.">
+<meta name="theme-color" content="#0A0B0D" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#F7F5F0" media="(prefers-color-scheme: light)">
+<link rel="icon" href="/img/monogram.svg" type="image/svg+xml">
 <link rel="canonical" href="https://binishkhadka.github.io/">
 
-<!-- What a link preview shows. Without these, pasting the site anywhere
-     produces a blank card and the share does a fraction of its work. -->
-<meta property="og:title" content="BK Apps — small, focused mobile apps">
-<meta property="og:description" content="Swing Trade Signals and FlashLog, for iOS and Android. Plus free calculators that do the same jobs in a browser.">
+<meta property="og:title" content="Two apps for your money. One for the queue you're stuck in.">
+<meta property="og:description" content="FlashLog logs what you spend in three taps. Swing Trade Signals scores technical setups with an entry, a stop and a risk-to-reward. Crowd Crusher is coming.">
 <meta property="og:image" content="https://binishkhadka.github.io/img/og-card.png">
 <meta property="og:url" content="https://binishkhadka.github.io/">
 <meta property="og:type" content="website">
@@ -21,434 +19,269 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Public+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=Geist+Mono:wght@400;500&family=Geist:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="/assets/base.css">
+<script defer src="/assets/site.js"></script>
 <style>
-  /* The page is deliberately monochrome. All three app icons are strongly
-     coloured and pull in different directions — near-black navy, cream, and
-     a bright blue game icon — so any page accent would fight at least one.
-     Letting the products supply the only colour keeps them the thing you
-     look at, which matters more now the screenshots are the main event. */
-  :root {
-    --paper:   #FCFCFB;
-    --ink:     #111114;
-    --ink-2:   #3A3A40;
-    --muted:   #78787F;
-    --faint:   #A2A2A9;
-    --rule:    #E6E6E3;
-    --rule-2:  #D2D2CE;
-    --tile:    #F3F3F1;
-    --live:    #2E6B45;
-    --live-bg: #E8F1EB;
-    --shadow:  0 18px 40px -22px rgba(17,17,20,.38);
+  /* ---- masthead --------------------------------------------------------- */
+  .top { padding-block: 28px 0; }
+  .top .inner { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+  .monogram { width: 34px; height: 34px; display: block; }
+
+  .hero { padding-block: clamp(40px, 7vw, 80px) clamp(36px, 5vw, 60px); }
+  .hero h1 { max-width: 15ch; }
+  .hero .lede { margin-top: 22px; }
+  .hero .meta { margin-bottom: 18px; }
+
+  /* ---- product bands ---------------------------------------------------- */
+  /* Full-bleed, each tinted with its own product's accent. Adjacent bands butt
+     together: the colour change IS the separator, so there are no rules to
+     draw and no two accents at full strength in one viewport. */
+  .band {
+    background: color-mix(in oklab, var(--accent) 7%, var(--canvas));
+    border-block-start: 1px solid color-mix(in oklab, var(--accent) 16%, var(--line));
+    padding-block: clamp(52px, 7vw, 92px);
   }
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --paper:   #0C0C0E;
-      --ink:     #F2F2F0;
-      --ink-2:   #C6C6C4;
-      --muted:   #8A8A92;
-      --faint:   #6A6A72;
-      --rule:    #232327;
-      --rule-2:  #33333A;
-      --tile:    #17171A;
-      --live:    #7FC49B;
-      --live-bg: #16241C;
-      --shadow:  0 18px 44px -20px rgba(0,0,0,.8);
-    }
+  @media (prefers-color-scheme: light) {
+    .band { background: color-mix(in oklab, var(--accent) 5%, var(--canvas)); }
+  }
+  /* Sampled from each icon's FIGURE, never its ground: the navy and the sky
+     blue are backgrounds, so an accent taken from them would smear the icon
+     into its own band and lose the silhouette. */
+  .band--sts { --accent: #3ECF7C; }
+  .band--fl  { --accent: #C4573F; }
+  .band--cc  { --accent: #FFC53D; }
+  @media (prefers-color-scheme: light) {
+    .band--sts { --accent: #127A45; }
+    .band--fl  { --accent: #9E3B2B; }
+    .band--cc  { --accent: #8A5E06; }
   }
 
-  * { box-sizing: border-box; }
-  html { -webkit-text-size-adjust: 100%; }
-  body {
-    margin: 0;
-    padding: 0 24px 96px;
-    background: var(--paper);
-    color: var(--ink);
-    font-family: 'Public Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    font-size: 16px;
-    line-height: 1.6;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-  }
-  .wrap { max-width: 860px; margin: 0 auto; }
-
-  a:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; border-radius: 2px; }
-
-  /* ---------- masthead ---------- */
-  header { padding: 92px 0 0; }
-  .monogram { display: block; width: 46px; height: 46px; margin: 0 0 40px; }
-
-  h1 {
-    font-family: 'Instrument Serif', Georgia, 'Times New Roman', serif;
-    font-weight: 400;
-    /* The statement is the hero. No image behind it, no 100vh opener — the
-       first screenful is the sentence and the first product shot. */
-    font-size: clamp(44px, 8.2vw, 82px);
-    line-height: 1.03;
-    letter-spacing: -.018em;
-    margin: 0;
-    max-width: 15ch;
-    text-wrap: balance;
-  }
-  h1 em { font-style: italic; }
-
-  .hero {
-    display: grid;
-    grid-template-columns: 1fr minmax(0, 250px);
-    gap: 48px;
-    align-items: end;
-    padding-bottom: 56px;
-  }
-  .hero-shot {
-    width: 100%;
-    height: auto;
-    border-radius: 20px;
-    display: block;
-    box-shadow: var(--shadow);
-    border: 1px solid var(--rule);
-  }
-  .byline {
-    font-size: 12px;
-    font-weight: 600;
-    letter-spacing: .14em;
-    text-transform: uppercase;
-    color: var(--faint);
-    margin: 0 0 24px;
-  }
-  .lede {
-    font-size: 17.5px;
-    line-height: 1.55;
-    color: var(--ink-2);
-    max-width: 38ch;
-    margin: 26px 0 0;
+  .band .inner { display: grid; gap: clamp(30px, 5vw, 56px); }
+  @media (min-width: 900px) {
+    .band .inner { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: center; }
+    .band--fl .inner, .band--cc .inner { direction: rtl; }
+    .band--fl .inner > *, .band--cc .inner > * { direction: ltr; }
   }
 
-  .sectionlabel {
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: .16em;
-    text-transform: uppercase;
-    color: var(--faint);
-    margin: 0;
-    padding-bottom: 14px;
-    border-bottom: 1px solid var(--ink);
+  .idrow { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; flex-wrap: wrap; }
+  .idrow .n { color: var(--text); font-variant-numeric: tabular-nums; }
+  .appicon {
+    width: 62px; height: 62px; border-radius: 14px; display: block;
+    /* No containment border. On this ground each icon has its own edge —
+       which is the entire argument for changing the canvas. */
+    box-shadow: 0 10px 26px -12px color-mix(in oklab, var(--accent) 60%, transparent);
   }
+  .band h2 { margin: 18px 0 12px; }
+  .band .say { color: var(--text-2); margin: 0 0 24px; max-width: 46ch; font-size: 1.0625rem; }
+  .band .actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-bottom: 18px; }
 
-  /* ---------- app entries ---------- */
-  /* Numbered because the count is real information: this is everything I
-     have made, in the order it shipped. Three is the whole list. */
-  .app { padding: 52px 0; border-bottom: 1px solid var(--rule); }
-  .index {
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: .16em;
-    text-transform: uppercase;
-    color: var(--faint);
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 20px;
-  }
-  .index .n { color: var(--ink); font-variant-numeric: tabular-nums; }
-  .status {
-    font-size: 10px;
-    font-weight: 600;
-    letter-spacing: .1em;
-    text-transform: uppercase;
-    padding: 3px 9px;
-    border-radius: 3px;
-    background: var(--live-bg);
-    color: var(--live);
-    margin-left: auto;
-  }
-  .status.soon { background: var(--tile); color: var(--muted); }
-
-  .head { display: grid; grid-template-columns: 68px 1fr; gap: 20px; align-items: start; }
-  .head > img { width: 68px; height: 68px; border-radius: 15px; display: block; border: 1px solid var(--rule-2); }
-  .app h2 {
-    font-family: 'Instrument Serif', Georgia, serif;
-    font-weight: 400;
-    font-size: clamp(30px, 5vw, 42px);
-    line-height: 1.08;
-    letter-spacing: -.012em;
-    margin: -6px 0 8px;
-  }
-  .app p { margin: 0; color: var(--ink-2); font-size: 16px; max-width: 54ch; }
-
-  /* Screenshot strip. It scrolls in its own container so the page body never
-     scrolls sideways, and snaps so a thumb lands on a whole screen. */
+  /* ---- screenshots ------------------------------------------------------ */
   .shots {
-    display: flex;
-    gap: 16px;
-    margin: 30px 0 0;
-    padding: 4px 4px 14px;
+    display: flex; gap: 14px;
+    padding: 4px 4px 12px;
     overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    -webkit-overflow-scrolling: touch;
+    /* proximity, not mandatory: mandatory fights the user at 400% zoom, where
+       a snap point can become unreachable */
+    scroll-snap-type: x proximity;
+    scroll-padding-inline: 4px;
+    /* without this, swiping past the end of the strip chains the gesture to
+       the browser's back navigation and the visitor leaves by accident */
+    overscroll-behavior-inline: contain;
     scrollbar-width: thin;
   }
-  .shots img {
-    width: 208px;
-    height: auto;
-    flex: 0 0 auto;
-    border-radius: 17px;
-    border: 1px solid var(--rule);
-    box-shadow: var(--shadow);
-    scroll-snap-align: start;
+  .shots > * { flex: 0 0 auto; width: min(196px, 52vw); scroll-snap-align: start; }
+  .shots:focus-visible { outline: 2px solid var(--text); outline-offset: 5px; border-radius: 8px; }
+
+  .mock {
+    border-radius: 18px; padding: 20px; background: var(--surface);
+    border: 1px solid color-mix(in oklab, var(--accent) 22%, var(--line));
+    font-family: 'Geist Mono', ui-monospace, monospace; font-size: .8125rem;
+    box-shadow: 0 30px 60px -30px color-mix(in oklab, var(--accent) 45%, transparent);
   }
+  .mock .row { display: flex; justify-content: space-between; gap: 12px; padding-block: 9px; border-block-end: 1px solid var(--line); }
+  .mock .row:last-child { border: 0; }
+  .mock .k { color: var(--text-3); }
+  .mock .v { color: var(--text); font-variant-numeric: tabular-nums; }
+  .mock .tick { color: color-mix(in oklab, var(--accent) 80%, var(--text)); }
+  .mock .cap { color: var(--text-3); font-size: .6875rem; letter-spacing: .08em; text-transform: uppercase; margin: 14px 0 0; }
 
-  .actions { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin: 28px 0 0; }
-  /* Official Apple and Google artwork, used unmodified — both companies'
-     brand guidelines forbid recreating or restyling the badges, so these are
-     their own files rather than CSS lookalikes. Google's badge ships with
-     ~9% internal padding that Apple's does not, which is why the heights
-     differ: it makes the visible buttons match, not the files. */
-  .badge { display: inline-flex; border-radius: 8px; }
-  .badge img { display: block; height: 40px; width: auto; border: 0; }
-  .badge.gp img { height: 47px; margin: 0 -6px; }
-  .badge:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
-
-  .share {
-    font: inherit;
-    font-size: 13px;
-    font-weight: 500;
-    color: var(--muted);
-    background: none;
-    border: 1px solid var(--rule-2);
-    border-radius: 999px;
-    padding: 8px 15px;
-    cursor: pointer;
-    margin-left: 4px;
-    transition: color .18s ease, border-color .18s ease;
-  }
-  .share:hover, .share:focus-visible { color: var(--ink); border-color: var(--ink); }
-
-  .links { display: flex; flex-wrap: wrap; gap: 18px; margin-top: 22px; }
-  .links a {
-    font-size: 14px;
-    font-weight: 500;
-    color: var(--muted);
-    text-decoration: none;
-    padding-bottom: 2px;
-    border-bottom: 1px solid var(--rule-2);
-    transition: border-color .18s ease, color .18s ease;
-  }
-  .links a:hover, .links a:focus-visible { color: var(--ink); border-color: var(--ink); }
-
-  /* ---------- tools ---------- */
-  .tools { padding: 52px 0; border-bottom: 1px solid var(--rule); }
+  /* ---- tools ------------------------------------------------------------ */
+  .tools { background: var(--well); border-block-start: 1px solid var(--line); padding-block: clamp(52px, 7vw, 84px); }
   .tool {
-    display: block;
-    text-decoration: none;
-    color: inherit;
-    border: 1px solid var(--rule);
-    border-radius: 14px;
-    padding: 24px 26px;
-    margin-top: 24px;
-    transition: border-color .18s ease, transform .18s ease;
+    display: block; text-decoration: none; color: inherit;
+    border: 1px solid var(--line-2); border-radius: 16px;
+    padding: 26px; margin-top: 24px; max-width: 620px;
+    background: var(--surface);
+    transition: border-color var(--dur) var(--ease), transform var(--dur) var(--ease);
   }
-  .tool:hover, .tool:focus-visible { border-color: var(--rule-2); transform: translateY(-2px); }
-  .tool h3 {
-    font-family: 'Instrument Serif', Georgia, serif;
-    font-weight: 400;
-    font-size: 25px;
-    margin: 0 0 6px;
-  }
-  .tool p { margin: 0; color: var(--muted); font-size: 15px; max-width: 56ch; }
-  .tool .go { font-size: 13px; color: var(--ink); margin-top: 12px; display: inline-block; }
+  .tool:hover, .tool:focus-visible { border-color: var(--field); transform: translateY(-2px); }
+  .tool h3 { font-family: 'Bricolage Grotesque', system-ui, sans-serif; font-weight: 700; font-size: 1.4rem; letter-spacing: -.02em; margin: 0 0 8px; }
+  .tool p { color: var(--text-2); margin: 0; font-size: .9375rem; }
+  .tool .go { display: inline-block; margin-top: 14px; font-family: 'Geist Mono', ui-monospace, monospace; font-size: .75rem; letter-spacing: .06em; color: var(--text); }
 
-  /* ---------- contact ---------- */
-  .contact { padding: 52px 0 0; }
-  .contact p { margin: 0; color: var(--ink-2); font-size: 16px; max-width: 52ch; }
-  .contact a { color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--rule-2); }
-  .contact a:hover, .contact a:focus-visible { border-color: var(--ink); }
-
-  footer {
-    margin-top: 72px;
-    padding-top: 20px;
-    border-top: 1px solid var(--rule);
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 10px;
-    font-size: 13px;
-    color: var(--faint);
-  }
-  footer a { color: var(--faint); text-decoration: none; border-bottom: 1px solid transparent; }
-  footer a:hover, footer a:focus-visible { color: var(--ink); border-color: var(--rule-2); }
-
-  @media (max-width: 720px) {
-    .hero { grid-template-columns: 1fr; gap: 34px; align-items: start; padding-bottom: 44px; }
-    .hero-shot { max-width: 208px; }
-    header { padding-top: 64px; }
-    .monogram { margin-bottom: 30px; }
-    .head { grid-template-columns: 56px 1fr; gap: 16px; }
-    .head > img { width: 56px; height: 56px; border-radius: 13px; }
-    .shots img { width: 168px; }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    * { transition: none !important; }
-    .tool:hover { transform: none; }
-    .shots { scroll-behavior: auto; }
-  }
+  .close { padding-block: clamp(48px, 6vw, 76px); }
+  .close p { color: var(--text-2); max-width: 52ch; margin: 18px 0 0; }
+  .close a { color: var(--text); text-decoration: none; border-bottom: 1px solid var(--field); }
+  .close a:hover { border-color: var(--text); }
 </style>
 </head>
 <body>
-<div class="wrap">
 
-  <header>
-    <img class="monogram" src="img/monogram.svg" width="46" height="46" alt="">
-    <div class="hero">
-      <div>
-        <p class="byline">Apps by Binish Khadka</p>
-        <h1>Small, focused apps that <em>get out of the way.</em></h1>
-        <p class="lede">
-          Three of them, for iOS and Android. Each does one job quickly and
-          then leaves you alone.
-        </p>
-      </div>
-      <img class="hero-shot" src="img/shots/flashlog-overview.webp" width="560" height="1212"
-           alt="FlashLog showing a year of spending broken down by category" loading="eager" decoding="async">
-    </div>
-  </header>
-
-  <p class="sectionlabel">Apps</p>
-
-  <section class="app">
-    <p class="index"><span class="n">01</span> Finance <span class="status">Available</span></p>
-    <div class="head">
-      <img src="img/swing-trade-signals.png" width="68" height="68" alt="Swing Trade Signals app icon">
-      <div>
-        <h2>Swing Trade Signals</h2>
-        <p>
-          Technical swing-trade setups, ranked and scored, each with entry
-          context and a risk-to-reward figure. Educational — not financial
-          advice.
-        </p>
-      </div>
-    </div>
-    <div class="actions">
-      <!-- No country code in Apple links: Apple then routes each visitor to
-           their own country's store, instead of showing everyone outside the
-           US an "not available in your country" interstitial. -->
-      <a class="badge" href="https://apps.apple.com/app/id6797416246"
-         aria-label="Download Swing Trade Signals on the App Store">
-        <img src="img/appstore.svg" alt="Download on the App Store" height="40">
-      </a>
-      <a class="badge gp" href="https://play.google.com/store/apps/details?id=com.swingtradesignals.app"
-         aria-label="Get Swing Trade Signals on Google Play">
-        <img src="img/googleplay.png" alt="Get it on Google Play" height="47">
-      </a>
-      <button class="share" type="button" data-share="/swingtradesignals">Copy share link</button>
-    </div>
-    <div class="links">
-      <a href="/support/swing-trade-signals/">Support</a>
-      <a href="/privacy-policy/">Privacy</a>
-      <a href="/privacy-policy/terms.html">Terms</a>
-    </div>
-  </section>
-
-  <section class="app">
-    <p class="index"><span class="n">02</span> Personal finance <span class="status">Available</span></p>
-    <div class="head">
-      <img src="img/flashlog.png" width="68" height="68" alt="FlashLog app icon">
-      <div>
-        <h2>FlashLog</h2>
-        <p>
-          An expense tracker built on one idea: logging a purchase should take
-          less time than the purchase did. No account, no cloud — it works with
-          no signal, and your entries stay on your phone.
-        </p>
-      </div>
-    </div>
-    <div class="shots">
-      <img src="img/shots/flashlog-add.webp" width="560" height="1212" alt="Adding an expense in FlashLog" loading="lazy" decoding="async">
-      <img src="img/shots/flashlog-overview.webp" width="560" height="1212" alt="FlashLog spending overview" loading="lazy" decoding="async">
-      <img src="img/shots/flashlog-month.webp" width="560" height="1212" alt="FlashLog monthly view" loading="lazy" decoding="async">
-      <img src="img/shots/flashlog-year.webp" width="560" height="1212" alt="FlashLog yearly breakdown" loading="lazy" decoding="async">
-    </div>
-    <div class="actions">
-      <a class="badge" href="https://apps.apple.com/app/id6810429342"
-         aria-label="Download FlashLog on the App Store">
-        <img src="img/appstore.svg" alt="Download on the App Store" height="40">
-      </a>
-      <a class="badge gp" href="https://play.google.com/store/apps/details?id=com.bk.flashlog"
-         aria-label="Get FlashLog on Google Play">
-        <img src="img/googleplay.png" alt="Get it on Google Play" height="47">
-      </a>
-      <button class="share" type="button" data-share="/flashlog">Copy share link</button>
-    </div>
-    <div class="links">
-      <a href="/support/flashlog/">Support</a>
-      <a href="/flashlog-legal/">Privacy</a>
-      <a href="/flashlog-legal/terms.html">Terms</a>
-    </div>
-  </section>
-
-  <section class="app">
-    <p class="index"><span class="n">03</span> Game <span class="status soon">In development</span></p>
-    <div class="head">
-      <img src="img/crowd-crusher.png" width="68" height="68" alt="Crowd Crusher app icon">
-      <div>
-        <h2>Crowd Crusher</h2>
-        <p>
-          A crowd runner. Pick the gate that doubles your army rather than the
-          one that halves it, get through what is in the way, and finish the
-          level with more soldiers than you started with.
-        </p>
-      </div>
-    </div>
-  </section>
-
-  <section class="tools">
-    <p class="sectionlabel">Free tools</p>
-    <a class="tool" href="/tools/position-size/">
-      <h3>Position size calculator</h3>
-      <p>
-        Work out how many shares to buy so a trade risks a fixed percentage of
-        your account — the number that decides whether a losing streak is
-        survivable. Free, no sign-up, nothing leaves your browser.
-      </p>
-      <span class="go">Open the calculator &rarr;</span>
-    </a>
-  </section>
-
-  <div class="contact">
-    <p>
-      Questions, problems, or a request to access or delete your data —
-      write to <a href="mailto:bkappsupport@gmail.com">bkappsupport@gmail.com</a>,
-      or see <a href="/support/">support</a>. I read everything that arrives.
-    </p>
+<header class="top">
+  <div class="wrap inner">
+    <a href="/" aria-label="BK Apps home"><img class="monogram" src="/img/monogram.svg" width="34" height="34" alt=""></a>
+    <p class="meta">iOS &amp; Android</p>
   </div>
+</header>
 
-  <footer>
-    <span>&copy; <span id="y">2026</span> Binish Khadka</span>
-    <span><a href="/privacy-policy/">Swing Trade Signals</a> &nbsp;·&nbsp; <a href="/flashlog-legal/">FlashLog</a></span>
-  </footer>
+<main>
+  <section class="wrap hero">
+    <p class="meta">Two live · one in development</p>
+    <h1>Two apps for your money. One for the queue you're stuck in.</h1>
+    <p class="lede">
+      Each one does a single job, does it in seconds, and hands the phone
+      straight back. Nothing to sign up for before you can start.
+    </p>
+  </section>
 
-</div>
-<script>
-  document.getElementById('y').textContent = new Date().getFullYear();
+  <!-- 01 ───────────────────────────────────────────────────────────────── -->
+  <section class="band band--sts">
+    <div class="wrap inner">
+      <div>
+        <p class="meta idrow"><span class="n">01</span> Stocks · Educational <span class="chip">Available</span></p>
+        <img class="appicon" src="/img/swing-trade-signals.webp" width="62" height="62" alt="Swing Trade Signals app icon">
+        <h2>Know the size before you take the trade</h2>
+        <p class="say">
+          Technical swing-trade setups on US stocks, each scored and laid out
+          the same way: what the screen picked up, where the entry sits, where
+          the stop goes, and the risk-to-reward that falls out of the two. The
+          homework is already typed up. What you do with it is your call.
+          Educational — not financial advice.
+        </p>
+        <div class="actions">
+          <!-- No country code in Apple links: Apple routes each visitor to
+               their own store instead of showing everyone outside the US an
+               "not available in your country" interstitial. -->
+          <a class="badge" href="https://apps.apple.com/app/id6797416246" aria-label="Download Swing Trade Signals on the App Store">
+            <img src="/img/appstore.svg" alt="Download on the App Store" width="120" height="42">
+          </a>
+          <a class="badge gp" href="https://play.google.com/store/apps/details?id=com.swingtradesignals.app" aria-label="Get Swing Trade Signals on Google Play">
+            <img src="/img/googleplay.png" alt="Get it on Google Play" width="135" height="49">
+          </a>
+        </div>
+        <div class="quietlinks">
+          <a href="/support/swing-trade-signals/">Support</a>
+          <a href="/privacy-policy/">Privacy</a>
+          <a href="/privacy-policy/terms.html">Terms</a>
+        </div>
+      </div>
+      <!-- An honest HTML mock of the app's output, not a screenshot pretending
+           to be one. Costs 0 KB and is accurate; replaced the day real
+           screenshots are exported from App Store Connect. -->
+      <div class="mock" role="img" aria-label="Example of a scored setup: ticker, score, entry, stop and risk-to-reward">
+        <div class="row"><span class="tick">AAPL</span><span class="v">★★★★☆</span></div>
+        <div class="row"><span class="k">Entry</span><span class="v">182.40</span></div>
+        <div class="row"><span class="k">Stop</span><span class="v">176.10</span></div>
+        <div class="row"><span class="k">Risk / reward</span><span class="v">1 : 2.4</span></div>
+        <div class="row"><span class="k">Trend · Momentum</span><span class="v">Up · Rising</span></div>
+        <p class="cap">Example only · not a recommendation</p>
+      </div>
+    </div>
+  </section>
 
-  // "Copy share link" hands over the device-aware link, so whoever receives
-  // it lands on their own store rather than being asked which phone they have.
-  for (const b of document.querySelectorAll('[data-share]')) {
-    b.addEventListener('click', async () => {
-      const url = location.origin + b.dataset.share;
-      const said = (t) => { b.textContent = t; setTimeout(() => (b.textContent = 'Copy share link'), 1800); };
-      try {
-        await navigator.clipboard.writeText(url);
-        said('Copied');
-      } catch {
-        // Clipboard access can be refused outright (insecure context, or the
-        // user declined). Falling back to the share sheet, then to simply
-        // showing the link, means the button always does something.
-        if (navigator.share) { try { await navigator.share({ url }); return; } catch {} }
-        said(url.replace(/^https?:\/\//, ''));
-      }
-    });
-  }
-</script>
+  <!-- 02 ───────────────────────────────────────────────────────────────── -->
+  <section class="band band--fl">
+    <div class="wrap inner">
+      <div>
+        <p class="meta idrow"><span class="n">02</span> Spending <span class="chip">Available</span></p>
+        <img class="appicon" src="/img/flashlog.webp" width="62" height="62" alt="FlashLog app icon">
+        <h2>Log what you spent before you put your card away</h2>
+        <p class="say">
+          Three taps, no account, no sign-up, no bank to connect. It works with
+          no signal, and your entries stay on your phone. Month and year views
+          then show where the money actually went.
+        </p>
+        <div class="actions">
+          <a class="badge" href="https://apps.apple.com/app/id6810429342" aria-label="Download FlashLog on the App Store">
+            <img src="/img/appstore.svg" alt="Download on the App Store" width="120" height="42">
+          </a>
+          <a class="badge gp" href="https://play.google.com/store/apps/details?id=com.bk.flashlog" aria-label="Get FlashLog on Google Play">
+            <img src="/img/googleplay.png" alt="Get it on Google Play" width="135" height="49">
+          </a>
+        </div>
+        <div class="quietlinks">
+          <a href="/support/flashlog/">Support</a>
+          <a href="/flashlog-legal/">Privacy</a>
+          <a href="/flashlog-legal/terms.html">Terms</a>
+        </div>
+      </div>
+      <div class="shots" tabindex="0" role="group" aria-label="FlashLog screenshots">
+        <div class="device"><img src="/img/shots/flashlog-add.webp" width="560" height="1212" alt="Adding an expense in FlashLog: amount, category, done" loading="lazy" decoding="async"></div>
+        <div class="device"><img src="/img/shots/flashlog-overview.webp" width="560" height="1212" alt="A year of FlashLog spending, broken down by category" loading="lazy" decoding="async"></div>
+        <div class="device"><img src="/img/shots/flashlog-month.webp" width="560" height="1212" alt="A month of FlashLog entries, day by day" loading="lazy" decoding="async"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 03 ───────────────────────────────────────────────────────────────── -->
+  <section class="band band--cc">
+    <div class="wrap inner">
+      <div>
+        <p class="meta idrow"><span class="n">03</span> Game <span class="chip" data-soon>In development</span></p>
+        <img class="appicon" src="/img/crowd-crusher.webp" width="62" height="62" alt="Crowd Crusher app icon">
+        <h2>Run at the gate that doubles your crowd</h2>
+        <p class="say">
+          Not the one that halves it. Get what is left of your army through the
+          obstacles, take the boss at the end, and walk away with more soldiers
+          than you started with. One hand, one thumb.
+        </p>
+        <div class="actions">
+          <a class="btn btn--ghost" href="mailto:bkappsupport@gmail.com?subject=Tell%20me%20when%20Crowd%20Crusher%20is%20out">Tell me when it's out</a>
+        </div>
+      </div>
+      <div class="mock" role="img" aria-label="Example of a gate choice: one gate doubles the crowd, the other halves it">
+        <div class="row"><span class="k">Crowd</span><span class="v">148</span></div>
+        <div class="row"><span class="tick">Left gate</span><span class="v">× 2</span></div>
+        <div class="row"><span class="k">Right gate</span><span class="v">÷ 2</span></div>
+        <div class="row"><span class="k">Boss in</span><span class="v">40 m</span></div>
+        <p class="cap">Sky Islands · level 8</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- tools ────────────────────────────────────────────────────────────── -->
+  <section class="tools">
+    <div class="wrap">
+      <p class="meta">Free, in your browser</p>
+      <a class="tool" href="/tools/position-size/">
+        <h3>Position size calculator</h3>
+        <p>
+          How many shares to buy so one losing trade costs a fixed amount you
+          chose, rather than whatever the position happens to be worth. Long or
+          short. No sign-up, and nothing you type leaves the browser.
+        </p>
+        <span class="go">Work out a position size &rarr;</span>
+      </a>
+    </div>
+  </section>
+
+  <section class="wrap close">
+    <p class="meta">Something broken?</p>
+    <p>
+      Email <a href="mailto:bkappsupport@gmail.com">bkappsupport@gmail.com</a>
+      and a person answers, not a ticket queue. Common questions are already
+      answered on <a href="/support/">support</a>.
+    </p>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap inner">
+    <span>&copy; <span data-year>2026</span> Binish Khadka</span>
+    <span><a href="/support/">Support</a> &nbsp;·&nbsp; <a href="/tools/">Tools</a></span>
+  </div>
+</footer>
+
 </body>
 </html>

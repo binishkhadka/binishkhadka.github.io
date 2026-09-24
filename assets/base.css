@@ -1,0 +1,292 @@
+/* ============================================================================
+   base.css — the only file in this repo that defines a colour.
+   If you are typing a # anywhere else, stop. (Two exceptions, noted below.)
+
+   Loaded by every page. Page-type sheets (tool.css) and a page's own inline
+   <style> load after it; that load order is the whole cascade policy.
+
+   THE ARGUMENT FOR THE DARK GROUND
+   The previous page was cream, and monochrome, on the reasoning that three
+   strongly-coloured app icons would fight any accent. The diagnosis was right
+   and the fix was aimed at the wrong variable. On cream, the FlashLog icon —
+   which is itself cream — had no edge at all, and needed a 1px border drawn
+   round it to be visible. That border was the tell.
+
+   On a deep warm-neutral ground all three icons resolve without help: the
+   cream one lifts, the near-black navy one reads as a deep object rather than
+   a hole, and the game's bright blue reads as neon rather than as an
+   intruder. Colour then belongs to each product, inside its own band, where
+   it behaves like lighting rather than decoration. The site itself owns no
+   hue: chrome, body text and the primary button are all achromatic.
+   ============================================================================ */
+
+:root {
+  /* Native UI — spinners, scrollbars, ::selection, focus rings — follows the
+     theme. Without this the calculator's number inputs keep light-mode
+     spinner stubs glued to dark fields. */
+  color-scheme: dark light;
+
+  /* Dark is the default; the light block below overrides. */
+  /* TOKENS:DARK */
+  --canvas:    #0A0B0D;   /* not #000: true black leaves no room for shadow */
+  --surface:   #101216;
+  --surface-2: #171A1F;
+  --well:      #060709;
+  --line:      #1C1F26;   /* decorative hairlines — exempt from 1.4.11 */
+  --line-2:    #2A2E37;
+  --field:     #6A707B;   /* control boundaries — must clear 3:1 */
+  --text:      #F2F3F1;   /* warm white, not #FFF: pure white smears on OLED */
+  --text-2:    #B9BFC7;
+  --text-3:    #9098A3;   /* small-caps metadata. The token that failed before. */
+
+  /* The site's own accent is the text colour: achromatic on purpose. A band
+     overrides --accent and everything in it re-tints. */
+  --accent: var(--text);
+
+  --measure: 1180px;
+
+  --ease:      cubic-bezier(.2, 0, 0, 1);   /* responses: commit, then settle */
+  --ease-mid:  cubic-bezier(.4, 0, .2, 1);  /* things travelling A to B */
+  --dur-fast:  120ms;
+  --dur:       180ms;
+  --dur-slow:  260ms;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    /* TOKENS:LIGHT */
+    --canvas:    #F7F5F0;   /* warm bone, borrowed from FlashLog's own UI */
+    --surface:   #FFFDF8;
+    --surface-2: #EFEDE6;
+    --well:      #EBE8E0;
+    --line:      #E0DCD2;
+    --line-2:    #CFC9BC;
+    --field:     #858074;
+    --text:      #16171A;
+    --text-2:    #45494F;
+    --text-3:    #5F646B;
+    --accent: var(--text);
+  }
+}
+
+/* ---------------------------------------------------------------- reset --- */
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--canvas);
+  color: var(--text);
+  font-family: 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  font-size: 17px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::selection { background: var(--text); color: var(--canvas); }
+
+img { max-width: 100%; }
+[hidden] { display: none !important; }
+
+a:focus-visible,
+button:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid var(--text);
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+
+/* --------------------------------------------------------------- layout --- */
+.wrap {
+  max-width: var(--measure);
+  margin: 0 auto;
+  padding-inline: 24px;
+}
+@media (min-width: 900px) { .wrap { padding-inline: 40px; } }
+
+/* ----------------------------------------------------------------- type --- */
+/* Display is a tight grotesque, not a serif. The serif this page used before
+   is the signature face of the 2023-25 indie landing page, which is most of
+   why it read as a blog rather than a product. */
+.display,
+h1 {
+  font-family: 'Bricolage Grotesque', 'Geist', system-ui, sans-serif;
+  font-weight: 700;
+  font-size: clamp(2.6rem, 1.2rem + 6vw, 5.6rem);
+  line-height: .96;          /* sub-1.0 leading is most of the 2026 look */
+  letter-spacing: -.035em;
+  margin: 0;
+  text-wrap: balance;
+}
+
+h2 {
+  font-family: 'Bricolage Grotesque', 'Geist', system-ui, sans-serif;
+  font-weight: 700;
+  font-size: clamp(1.75rem, 1rem + 2.4vw, 2.85rem);
+  line-height: 1.04;
+  letter-spacing: -.028em;
+  margin: 0;
+  text-wrap: balance;
+}
+
+p { text-wrap: pretty; }   /* kills orphans; never use balance on body copy */
+
+/* Everything metadata-shaped is monospace. That single move is what shifts
+   the register from "I wrote this" to "I built this and it works". */
+.meta {
+  font-family: 'Geist Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: .75rem;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  margin: 0;
+}
+
+.lede {
+  font-size: clamp(1.0625rem, 1rem + .4vw, 1.25rem);
+  line-height: 1.5;
+  color: var(--text-2);
+  margin: 0;
+  max-width: 46ch;
+}
+
+/* --------------------------------------------------------------- pieces --- */
+.chip {
+  font-family: 'Geist Mono', ui-monospace, monospace;
+  font-size: .6875rem;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  padding: 4px 9px;
+  border-radius: 999px;
+  border: 1px solid color-mix(in oklab, var(--accent) 34%, transparent);
+  color: color-mix(in oklab, var(--accent) 78%, var(--text));
+  background: color-mix(in oklab, var(--accent) 12%, transparent);
+  white-space: nowrap;
+}
+.chip[data-soon] {
+  border-color: var(--line-2);
+  color: var(--text-3);
+  background: none;
+}
+
+/* Primary action: bone fill, no hue. The site never owns a colour. */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font: inherit;
+  font-size: .9375rem;
+  font-weight: 600;
+  padding: 13px 22px;         /* >=44px tall: a phone thumb target */
+  border-radius: 999px;
+  border: 1px solid transparent;
+  background: var(--text);
+  color: var(--canvas);
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform var(--dur) var(--ease), opacity var(--dur) var(--ease);
+}
+.btn:hover { transform: translateY(-1px); opacity: .92; }
+.btn--ghost {
+  background: none;
+  color: var(--text);
+  border-color: var(--line-2);
+}
+.btn--ghost:hover { border-color: var(--field); }
+
+/* Official Apple and Google artwork, used unmodified — both companies' brand
+   guidelines forbid recreating, restyling OR animating the badges, so these
+   are their own files rather than CSS lookalikes, and nothing here moves
+   them. Google's badge ships ~9% internal padding Apple's does not, which is
+   why the two heights differ: it makes the visible buttons match, not the
+   files. Do not "fix" this. */
+.badges { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+.badge { display: inline-flex; border-radius: 8px; }
+.badge img { display: block; height: 42px; width: auto; border: 0; }
+.badge.gp img { height: 49px; margin: 0 -6px; }
+.badges--sm .badge img { height: 38px; }
+.badges--sm .badge.gp img { height: 45px; }
+
+.quietlinks { display: flex; flex-wrap: wrap; gap: 6px 4px; }
+.quietlinks a {
+  font-family: 'Geist Mono', ui-monospace, monospace;
+  font-size: .75rem;
+  letter-spacing: .04em;
+  color: var(--text-3);
+  text-decoration: none;
+  padding: 11px 10px;          /* 44px tall: these sit next to legal documents */
+  border-radius: 6px;
+  transition: color var(--dur) var(--ease), background var(--dur) var(--ease);
+}
+.quietlinks a:hover { color: var(--text); background: var(--surface-2); }
+
+/* Device frame. The bezel plus a 1px top highlight is what makes a screenshot
+   read as a lit object rather than a pasted rectangle. */
+.device {
+  border-radius: 30px;
+  padding: 6px;
+  background: var(--surface-2);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / .07),
+    /* tinted with the band's accent, never grey — a grey drop shadow is the
+       clearest tell of a default card component */
+    0 34px 64px -28px color-mix(in oklab, var(--accent) 45%, transparent);
+}
+.device img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 24px;         /* outer radius minus padding */
+  background: var(--surface-2);  /* placeholder while a lazy image loads */
+}
+
+footer {
+  border-top: 1px solid var(--line);
+  background: var(--well);
+  padding-block: 40px;
+  margin-top: 0;
+}
+footer .inner {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  justify-content: space-between;
+  align-items: center;
+}
+footer,
+footer a { font-family: 'Geist Mono', ui-monospace, monospace; font-size: .75rem; letter-spacing: .04em; }
+footer { color: var(--text-3); }
+footer a { color: var(--text-3); text-decoration: none; }
+footer a:hover { color: var(--text); }
+
+.sr-only {
+  position: absolute;
+  width: 1px; height: 1px;
+  margin: -1px; padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* --------------------------------------------------------------- motion --- */
+/* Cross-document view transitions: same-origin, multi-page, no JS. Browsers
+   without it do a normal navigation, which is what the site does today. */
+@media (prefers-reduced-motion: no-preference) {
+  @view-transition { navigation: auto; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Durations rather than `transition: none`, so transitionend still fires —
+     otherwise any future code awaiting a transition hangs for exactly the
+     users who opted out of motion, which is a miserable bug to find. */
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .btn:hover, .tool:hover { transform: none; }
+}
