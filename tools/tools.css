@@ -1,0 +1,246 @@
+/* Tool pages — the same tokens and type system as the site root, so moving
+   between a calculator and the homepage feels like one place.
+
+   A tool page has a different job from the homepage: someone arrives from a
+   search with one number to work out. The calculator is therefore the first
+   thing on the page, above any explanation, and the explanation sits below
+   for the people who want to know why the number is what it is. */
+:root {
+  --paper:   #FCFCFB;
+  --ink:     #111114;
+  --ink-2:   #3A3A40;
+  --muted:   #78787F;
+  --faint:   #A2A2A9;
+  --rule:    #E6E6E3;
+  --rule-2:  #D2D2CE;
+  --tile:    #F3F3F1;
+  --live:    #2E6B45;
+  --live-bg: #E8F1EB;
+  --warn:    #8A5A12;
+  --warn-bg: #FBF1DF;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --paper:   #0C0C0E;
+    --ink:     #F2F2F0;
+    --ink-2:   #C6C6C4;
+    --muted:   #8A8A92;
+    --faint:   #6A6A72;
+    --rule:    #232327;
+    --rule-2:  #33333A;
+    --tile:    #17171A;
+    --live:    #7FC49B;
+    --live-bg: #16241C;
+    --warn:    #E8BC72;
+    --warn-bg: #2A2113;
+  }
+}
+
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  padding: 0 24px 96px;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: 'Public Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.wrap { max-width: 660px; margin: 0 auto; }
+a:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; border-radius: 2px; }
+
+header { padding: 56px 0 0; }
+.back {
+  display: inline-block;
+  font-size: 13px;
+  color: var(--muted);
+  text-decoration: none;
+  letter-spacing: .02em;
+  margin-bottom: 34px;
+  border-bottom: 1px solid transparent;
+}
+.back:hover, .back:focus-visible { color: var(--ink); border-color: var(--rule-2); }
+
+.eyebrow {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--faint);
+  margin: 0 0 12px;
+}
+h1 {
+  font-family: 'Instrument Serif', Georgia, 'Times New Roman', serif;
+  font-weight: 400;
+  font-size: clamp(36px, 7vw, 54px);
+  line-height: 1.05;
+  letter-spacing: -.015em;
+  margin: 0 0 16px;
+  text-wrap: balance;
+}
+.lede { font-size: 17px; color: var(--ink-2); margin: 0 0 40px; max-width: 46ch; }
+
+/* ---------- the calculator ---------- */
+.calc {
+  border: 1px solid var(--rule);
+  border-radius: 16px;
+  padding: 28px;
+  background: var(--paper);
+}
+.fields { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+.field { display: flex; flex-direction: column; gap: 7px; }
+.field label { font-size: 13px; font-weight: 600; color: var(--ink-2); letter-spacing: .01em; }
+.field .hint { font-size: 12px; color: var(--faint); font-weight: 400; }
+.inputwrap { position: relative; display: flex; align-items: center; }
+.inputwrap .unit {
+  position: absolute;
+  left: 13px;
+  color: var(--faint);
+  font-size: 15px;
+  pointer-events: none;
+}
+.inputwrap .unit.suffix { left: auto; right: 13px; }
+.field input {
+  font: inherit;
+  font-size: 16px;               /* 16px or iOS Safari zooms on focus */
+  font-variant-numeric: tabular-nums;
+  width: 100%;
+  padding: 11px 13px 11px 28px;
+  color: var(--ink);
+  background: var(--paper);
+  border: 1px solid var(--rule-2);
+  border-radius: 9px;
+  transition: border-color .18s ease;
+}
+.field input.suffixed { padding: 11px 32px 11px 13px; }
+.field input:focus { outline: none; border-color: var(--ink); }
+.field input:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+
+.seg { display: flex; gap: 0; border: 1px solid var(--rule-2); border-radius: 9px; overflow: hidden; }
+.seg button {
+  font: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  flex: 1;
+  padding: 10px 8px;
+  background: var(--paper);
+  color: var(--muted);
+  border: 0;
+  cursor: pointer;
+  transition: background .16s ease, color .16s ease;
+}
+.seg button + button { border-left: 1px solid var(--rule-2); }
+.seg button[aria-pressed="true"] { background: var(--ink); color: var(--paper); }
+
+/* ---------- the answer ---------- */
+.result { margin-top: 26px; padding-top: 24px; border-top: 1px solid var(--rule); }
+.answer {
+  font-family: 'Instrument Serif', Georgia, serif;
+  font-size: clamp(42px, 9vw, 58px);
+  line-height: 1;
+  letter-spacing: -.02em;
+  font-variant-numeric: tabular-nums;
+  margin: 0;
+}
+.answer .sub {
+  font-family: 'Public Sans', sans-serif;
+  font-size: 15px;
+  letter-spacing: 0;
+  color: var(--muted);
+  margin-left: 10px;
+}
+.answerlabel {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--faint);
+  margin: 0 0 10px;
+}
+.breakdown { display: grid; grid-template-columns: 1fr 1fr; gap: 14px 20px; margin-top: 24px; }
+.cell { border-top: 1px solid var(--rule); padding-top: 11px; }
+.cell dt { font-size: 12.5px; color: var(--muted); margin: 0 0 3px; }
+.cell dd { font-size: 17px; margin: 0; font-variant-numeric: tabular-nums; font-weight: 500; }
+
+.note {
+  margin-top: 22px;
+  padding: 12px 15px;
+  border-radius: 9px;
+  font-size: 14px;
+  background: var(--warn-bg);
+  color: var(--warn);
+}
+.note[hidden] { display: none !important; }
+
+/* ---------- explanation ---------- */
+.prose { margin-top: 64px; }
+.prose h2 {
+  font-family: 'Instrument Serif', Georgia, serif;
+  font-weight: 400;
+  font-size: 30px;
+  line-height: 1.15;
+  margin: 46px 0 12px;
+}
+.prose h3 { font-size: 17px; font-weight: 600; margin: 30px 0 8px; }
+.prose p, .prose li { color: var(--ink-2); font-size: 16px; }
+.prose p { margin: 0 0 16px; max-width: 62ch; }
+.prose ul { margin: 0 0 16px; padding-left: 20px; max-width: 62ch; }
+.prose li { margin-bottom: 7px; }
+.prose strong { color: var(--ink); font-weight: 600; }
+.formula {
+  font-variant-numeric: tabular-nums;
+  background: var(--tile);
+  border-radius: 9px;
+  padding: 16px 18px;
+  margin: 0 0 16px;
+  font-size: 15px;
+  overflow-x: auto;
+}
+
+/* ---------- app card ---------- */
+.appcard {
+  display: grid;
+  grid-template-columns: 60px 1fr;
+  gap: 18px;
+  align-items: start;
+  margin-top: 56px;
+  padding: 26px;
+  border: 1px solid var(--rule);
+  border-radius: 14px;
+}
+.appcard img.icon { width: 60px; height: 60px; border-radius: 14px; border: 1px solid var(--rule-2); display: block; }
+.appcard h3 { font-family: 'Instrument Serif', Georgia, serif; font-weight: 400; font-size: 25px; margin: -3px 0 6px; }
+.appcard p { margin: 0 0 16px; color: var(--ink-2); font-size: 15px; }
+.badges { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+.badge { display: inline-flex; border-radius: 8px; }
+.badge img { display: block; height: 38px; width: auto; border: 0; }
+.badge.gp img { height: 45px; margin: 0 -6px; }
+.badge:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+
+.disclaimer { margin-top: 40px; font-size: 13.5px; color: var(--muted); max-width: 62ch; }
+
+footer {
+  margin-top: 64px;
+  padding-top: 20px;
+  border-top: 1px solid var(--rule);
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  font-size: 13px;
+  color: var(--faint);
+}
+footer a { color: var(--faint); text-decoration: none; border-bottom: 1px solid transparent; }
+footer a:hover, footer a:focus-visible { color: var(--ink); border-color: var(--rule-2); }
+
+@media (max-width: 560px) {
+  .fields { grid-template-columns: 1fr; gap: 16px; }
+  .breakdown { grid-template-columns: 1fr; }
+  .calc { padding: 22px 20px; }
+  header { padding-top: 40px; }
+}
+
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }

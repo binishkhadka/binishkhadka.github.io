@@ -1,0 +1,263 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Position Size Calculator — how many shares to buy per trade</title>
+<meta name="description" content="Free position size calculator. Enter your account size, the percentage you are willing to risk, your entry and your stop loss, and get the exact number of shares to buy. Works for long and short trades. Nothing leaves your browser.">
+<meta name="theme-color" content="#FCFCFB" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0C0C0E" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="../../img/monogram.svg" type="image/svg+xml">
+<link rel="canonical" href="https://binishkhadka.github.io/tools/position-size/">
+
+<meta property="og:title" content="Position Size Calculator">
+<meta property="og:description" content="How many shares to buy so a trade risks a fixed percentage of your account. Free, no sign-up.">
+<meta property="og:image" content="https://binishkhadka.github.io/img/og-card.png">
+<meta property="og:url" content="https://binishkhadka.github.io/tools/position-size/">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Public+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../tools.css">
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <a class="back" href="/">&larr; BK Apps</a>
+    <p class="eyebrow">Free tool</p>
+    <h1>Position size calculator</h1>
+    <p class="lede">
+      How many shares to buy so that being wrong costs a fixed, survivable
+      slice of your account. Nothing is sent anywhere — the maths runs in your
+      browser.
+    </p>
+  </header>
+
+  <section class="calc" aria-label="Position size calculator">
+    <div class="fields">
+      <div class="field">
+        <label for="account">Account size</label>
+        <div class="inputwrap">
+          <span class="unit" id="cur1">$</span>
+          <input id="account" type="number" inputmode="decimal" min="0" step="any" value="10000" autocomplete="off">
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="risk">Risk per trade <span class="hint">of the account</span></label>
+        <div class="inputwrap">
+          <input id="risk" class="suffixed" type="number" inputmode="decimal" min="0" max="100" step="any" value="1" autocomplete="off">
+          <span class="unit suffix">%</span>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="entry">Entry price</label>
+        <div class="inputwrap">
+          <span class="unit" id="cur2">$</span>
+          <input id="entry" type="number" inputmode="decimal" min="0" step="any" value="50" autocomplete="off">
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="stop">Stop loss</label>
+        <div class="inputwrap">
+          <span class="unit" id="cur3">$</span>
+          <input id="stop" type="number" inputmode="decimal" min="0" step="any" value="47.5" autocomplete="off">
+        </div>
+      </div>
+    </div>
+
+    <div class="result" aria-live="polite">
+      <p class="answerlabel" id="answerlabel">Buy</p>
+      <p class="answer"><span id="shares">—</span><span class="sub" id="sharesUnit">shares</span></p>
+
+      <dl class="breakdown">
+        <div class="cell">
+          <dt>Risk on this trade</dt>
+          <dd id="riskAmt">—</dd>
+        </div>
+        <div class="cell">
+          <dt>Risk per share</dt>
+          <dd id="riskShare">—</dd>
+        </div>
+        <div class="cell">
+          <dt>Position value</dt>
+          <dd id="posValue">—</dd>
+        </div>
+        <div class="cell">
+          <dt>Share of account</dt>
+          <dd id="posPct">—</dd>
+        </div>
+      </dl>
+
+      <p class="note" id="note" hidden></p>
+    </div>
+  </section>
+
+  <div class="prose">
+    <h2>How the number is worked out</h2>
+    <p>
+      Position size is the one decision that determines whether a losing run is
+      an inconvenience or the end of the account. It does not depend on how
+      confident you feel about the trade. It depends on three things: how much
+      money you have, how much of it you are prepared to lose on one idea, and
+      how far away your stop is.
+    </p>
+    <p class="formula">
+      risk amount&nbsp; = &nbsp;account &times; risk %<br>
+      risk per share&nbsp; = &nbsp;| entry &minus; stop |<br>
+      <strong>shares&nbsp; = &nbsp;risk amount &divide; risk per share</strong>
+    </p>
+    <p>
+      With a $10,000 account risking 1%, you are willing to lose $100. If you
+      buy at $50 and your stop is at $47.50, each share can lose you $2.50. So
+      you buy 40 shares: if the stop is hit, you lose $100, exactly as planned.
+    </p>
+
+    <h3>It works the same for a short</h3>
+    <p>
+      The calculator uses the distance between entry and stop, so it does not
+      matter which side of the entry your stop sits on. A stop above the entry
+      simply means you are short.
+    </p>
+
+    <h3>Why the position can be larger than your account</h3>
+    <p>
+      A tight stop produces a large share count, and the total position value
+      can exceed the cash you hold. That is not a mistake in the arithmetic —
+      it means the trade needs margin. The calculator flags it when it happens,
+      because it is the point at which a position stops being conservative no
+      matter how small the percentage looked.
+    </p>
+
+    <h3>What percentage should you risk?</h3>
+    <ul>
+      <li><strong>1%</strong> is the conventional starting point. Ten losses in a row costs about a tenth of the account.</li>
+      <li><strong>2%</strong> is aggressive. A run of ten losses takes roughly a fifth.</li>
+      <li><strong>Under 1%</strong> is common for people trading a larger account or a strategy that takes many trades a week.</li>
+    </ul>
+    <p>
+      The figure matters far less than applying it consistently. A trader who
+      always risks 2% will outlast one who usually risks 0.5% and occasionally
+      risks 15% because a setup looked certain.
+    </p>
+
+    <h3>Rounding</h3>
+    <p>
+      The share count is always rounded down. Rounding up would put the risk
+      above the limit you set, which defeats the purpose of setting one.
+    </p>
+  </div>
+
+  <div class="appcard">
+    <img class="icon" src="../../img/swing-trade-signals.png" width="60" height="60" alt="Swing Trade Signals app icon">
+    <div>
+      <h3>Doing this for every trade?</h3>
+      <p>
+        Swing Trade Signals scores swing-trade setups and carries the entry,
+        the stop and the risk-to-reward figure with each one, so the sizing is
+        already attached to the idea.
+      </p>
+      <div class="badges">
+        <a class="badge" href="https://apps.apple.com/app/id6797416246"
+           aria-label="Download Swing Trade Signals on the App Store">
+          <img src="../../img/appstore.svg" alt="Download on the App Store" height="38">
+        </a>
+        <a class="badge gp" href="https://play.google.com/store/apps/details?id=com.swingtradesignals.app"
+           aria-label="Get Swing Trade Signals on Google Play">
+          <img src="../../img/googleplay.png" alt="Get it on Google Play" height="45">
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <p class="disclaimer">
+    Educational tool, not financial advice. It does no more than the arithmetic
+    above and knows nothing about the trade you are considering. Nothing you
+    type is sent anywhere or stored.
+  </p>
+
+  <footer>
+    <span>&copy; <span id="y">2026</span> Binish Khadka</span>
+    <span><a href="/">BK Apps</a> &nbsp;·&nbsp; <a href="/support/">Support</a></span>
+  </footer>
+
+</div>
+<script>
+  document.getElementById('y').textContent = new Date().getFullYear();
+
+  const $ = (id) => document.getElementById(id);
+  const els = {
+    account: $('account'), risk: $('risk'), entry: $('entry'), stop: $('stop'),
+    shares: $('shares'), sharesUnit: $('sharesUnit'), answerlabel: $('answerlabel'),
+    riskAmt: $('riskAmt'), riskShare: $('riskShare'),
+    posValue: $('posValue'), posPct: $('posPct'), note: $('note'),
+  };
+
+  const money = (n) => n.toLocaleString(undefined, { style: 'currency', currency: 'USD', maximumFractionDigits: 2 });
+  const num = (el) => {
+    const v = parseFloat(el.value);
+    return Number.isFinite(v) ? v : NaN;
+  };
+
+  function blank(msg) {
+    els.shares.textContent = '—';
+    els.sharesUnit.textContent = 'shares';
+    for (const k of ['riskAmt', 'riskShare', 'posValue', 'posPct']) els[k].textContent = '—';
+    show(msg);
+  }
+
+  function show(msg) {
+    els.note.hidden = !msg;
+    if (msg) els.note.textContent = msg;
+  }
+
+  function calc() {
+    const account = num(els.account), riskPct = num(els.risk);
+    const entry = num(els.entry), stop = num(els.stop);
+
+    if (![account, riskPct, entry, stop].every(Number.isFinite)) return blank('');
+    if (account <= 0 || entry <= 0) return blank('Account size and entry price need to be above zero.');
+    if (riskPct <= 0) return blank('Set a risk percentage above zero.');
+    if (riskPct > 100) return blank('You cannot risk more than the whole account.');
+
+    const perShare = Math.abs(entry - stop);
+    if (perShare === 0) {
+      return blank('The stop is the same as the entry, so there is no risk per share to divide by — and no room for the trade to be wrong.');
+    }
+
+    const riskAmt = account * (riskPct / 100);
+    // always down: rounding up would push the loss past the limit just set
+    const shares = Math.floor(riskAmt / perShare);
+    const posValue = shares * entry;
+    const posPct = (posValue / account) * 100;
+
+    els.answerlabel.textContent = stop > entry ? 'Short' : 'Buy';
+    els.shares.textContent = shares.toLocaleString();
+    els.sharesUnit.textContent = shares === 1 ? 'share' : 'shares';
+    els.riskAmt.textContent = money(shares * perShare) + ' of ' + money(riskAmt);
+    els.riskShare.textContent = money(perShare);
+    els.posValue.textContent = money(posValue);
+    els.posPct.textContent = posPct.toFixed(1) + '%';
+
+    if (shares === 0) {
+      show('Your risk budget is smaller than the loss on a single share. Either widen the account, raise the risk percentage, or find a trade with a closer stop.');
+    } else if (posValue > account) {
+      show('This position is worth ' + money(posValue) + ', more than the account holds, so it needs margin. The stop is tight enough that the risk stays at ' +
+           riskPct + '% — but a gap through the stop would cost more than the figure above.');
+    } else {
+      show('');
+    }
+  }
+
+  for (const el of [els.account, els.risk, els.entry, els.stop]) {
+    el.addEventListener('input', calc);
+  }
+  calc();
+</script>
+</body>
+</html>

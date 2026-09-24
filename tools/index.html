@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Free tools — BK Apps</title>
+<meta name="description" content="Free calculators from BK Apps. No sign-up, no ads, nothing leaves your browser.">
+<meta name="theme-color" content="#FCFCFB" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0C0C0E" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="../img/monogram.svg" type="image/svg+xml">
+<link rel="canonical" href="https://binishkhadka.github.io/tools/">
+
+<meta property="og:title" content="Free tools — BK Apps">
+<meta property="og:description" content="Free calculators. No sign-up, nothing leaves your browser.">
+<meta property="og:image" content="https://binishkhadka.github.io/img/og-card.png">
+<meta property="og:url" content="https://binishkhadka.github.io/tools/">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Public+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="tools.css">
+<style>
+  .tool {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    border: 1px solid var(--rule);
+    border-radius: 14px;
+    padding: 24px 26px;
+    margin-bottom: 16px;
+    transition: border-color .18s ease, transform .18s ease;
+  }
+  .tool:hover, .tool:focus-visible { border-color: var(--rule-2); transform: translateY(-2px); }
+  .tool h2 { font-family: 'Instrument Serif', Georgia, serif; font-weight: 400; font-size: 26px; margin: 0 0 6px; }
+  .tool p { margin: 0; color: var(--muted); font-size: 15px; max-width: 56ch; }
+  .tool .go { font-size: 13px; color: var(--ink); margin-top: 12px; display: inline-block; }
+  @media (prefers-reduced-motion: reduce) { .tool:hover { transform: none; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <a class="back" href="/">&larr; BK Apps</a>
+    <p class="eyebrow">Free tools</p>
+    <h1>Calculators</h1>
+    <p class="lede">
+      The jobs my apps do, in a browser, for free. No sign-up, no account, and
+      nothing you type is sent anywhere.
+    </p>
+  </header>
+
+  <a class="tool" href="/tools/position-size/">
+    <h2>Position size calculator</h2>
+    <p>
+      How many shares to buy so a trade risks a fixed percentage of your
+      account — the number that decides whether a losing streak is survivable.
+      Handles long and short.
+    </p>
+    <span class="go">Open &rarr;</span>
+  </a>
+
+  <footer>
+    <span>&copy; <span id="y">2026</span> Binish Khadka</span>
+    <span><a href="/">BK Apps</a> &nbsp;·&nbsp; <a href="/support/">Support</a></span>
+  </footer>
+
+</div>
+<script>document.getElementById('y').textContent = new Date().getFullYear();</script>
+</body>
+</html>
