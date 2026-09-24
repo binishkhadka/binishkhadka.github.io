@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Get FlashLog</title>
+<meta name="description" content="Download FlashLog for iPhone.">
+<meta name="theme-color" content="#FCFCFB" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0C0C0E" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="../img/monogram.svg" type="image/svg+xml">
+
+<!-- What a link preview shows when this is pasted into a message or a post.
+     Without these, the thumbnail is whatever the scraper guesses. -->
+<meta property="og:title" content="FlashLog">
+<meta property="og:description" content="Log an expense in a couple of taps.">
+<meta property="og:image" content="https://binishkhadka.github.io/img/flashlog.png">
+<meta property="og:url" content="https://binishkhadka.github.io/flashlog/">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Public+Sans:wght@400;500;600&display=swap">
+
+<!-- In the head and before the body paints, so a phone leaves for the store
+     without ever flashing this page. Desktop falls through to the badges. -->
+<!-- No data-android yet: FlashLog is still in internal testing on Play, so
+     an Android visitor stays here and sees the App Store badge rather than
+     being sent to a Play listing that does not exist. Add the attribute the
+     day it goes public and this page starts routing Android too. -->
+<script src="../redirect.js"
+        data-ios="6810429342"></script>
+
+<style>
+  /* Same tokens as the site root: someone arriving here from a shared link
+     and then tapping through to the homepage should stay in one place. */
+  :root {
+    --paper:   #FCFCFB;
+    --ink:     #111114;
+    --ink-2:   #3A3A40;
+    --muted:   #78787F;
+    --rule:    #E6E6E3;
+    --rule-2:  #D2D2CE;
+    --tile:    #F3F3F1;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --paper:   #0C0C0E;
+      --ink:     #F2F2F0;
+      --ink-2:   #C6C6C4;
+      --muted:   #8A8A92;
+      --rule:    #232327;
+      --rule-2:  #33333A;
+      --tile:    #17171A;
+    }
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    padding: 0 24px 72px;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Public Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  .wrap { max-width: 480px; margin: 0 auto; padding-top: 88px; text-align: center; }
+  .icon {
+    width: 96px; height: 96px; border-radius: 21px;
+    display: block; margin: 0 auto 26px;
+    border: 1px solid var(--rule);
+  }
+  h1 {
+    font-family: 'Instrument Serif', Georgia, 'Times New Roman', serif;
+    font-weight: 400;
+    font-size: 40px;
+    line-height: 1.1;
+    margin: 0 0 12px;
+    text-wrap: balance;
+  }
+  .lede { color: var(--ink-2); margin: 0 0 32px; text-wrap: balance; }
+  .badges { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 10px; }
+  .badge { display: inline-flex; border-radius: 8px; }
+  .badge img { display: block; height: 40px; width: auto; border: 0; }
+  .badge.gp img { height: 47px; margin: 0 -6px; }
+  .badge:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+  .foot { margin-top: 40px; font-size: 14px; color: var(--muted); }
+  .foot a { color: var(--muted); text-decoration: none; border-bottom: 1px solid var(--rule-2); }
+  .foot a:hover, .foot a:focus-visible { color: var(--ink); border-color: var(--ink); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <img class="icon" src="../img/flashlog.png" alt="" width="96" height="96">
+  <h1>FlashLog</h1>
+  <p class="lede">Log an expense in a couple of taps. On iPhone now, Android soon.</p>
+
+  <div class="badges">
+    <a class="badge" href="https://apps.apple.com/app/id6810429342"
+       aria-label="Download FlashLog on the App Store">
+      <img src="../img/appstore.svg" alt="Download on the App Store" height="40">
+    </a>
+  </div>
+
+  <p class="foot"><a href="/">More apps by Binish Khadka</a></p>
+</div>
+</body>
+</html>
